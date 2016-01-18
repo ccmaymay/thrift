@@ -162,10 +162,8 @@ testoptionalrequired_LDADD = \
     libtestgenc.la
 
 testthrifttest_SOURCES = testthrifttest.c \
-    $(top_srcdir)/test/c_glib/src/thrift_test_handler.c \
-    $(top_srcdir)/test/c_glib/src/thrift_test_handler.h \
     gen-c_glib/t_test_thrift_test_types.h
-testthrifttest_LDADD = libtestgenc.la
+testthrifttest_LDADD = libtestgenc.la libthrifttesthandler.la
 testthrifttest_CFLAGS = -I$(top_srcdir)/test/c_glib/src -I./gen-c_glib $(GLIB_CFLAGS)
 
 testthrifttestclient_SOURCES = testthrifttestclient.cpp
@@ -173,11 +171,18 @@ testthrifttestclient_CPPFLAGS = -I../../cpp/src $(BOOST_CPPFLAGS) -I./gen-cpp -I
 testthrifttestclient_LDADD = ../../cpp/.libs/libthrift.la ../libthrift_c_glib.la libtestgenc.la libtestgencpp.la
 testthrifttestclient_LDFLAGS = -L../.libs -L../../cpp/.libs $(GLIB_LIBS) $(GOBJECT_LIBS)
 
-check_LTLIBRARIES = libtestgenc.la
+check_LTLIBRARIES = libtestgenc.la libthrifttesthandler.la
 
 if WITH_CPP
   check_LTLIBRARIES += libtestgencpp.la
 endif
+
+nodist_libthrifttesthandler_la_SOURCES = \
+    $(top_srcdir)/test/c_glib/src/thrift_test_handler.c \
+    $(top_srcdir)/test/c_glib/src/thrift_test_handler.h
+libthrifttesthandler_la_LIBADD = $(top_builddir)/lib/c_glib/libthrift_c_glib.la
+libthrifttesthandler_la_CFLAGS = -I$(top_srcdir)/test/c_glib/src -I./gen-c_glib -I./testhandler-dummy-dir $(GLIB_CFLAGS)
+EXTRA_libthrifttesthandler_DEPENDENCIES = testhandler-dummy-dir
 
 nodist_libtestgenc_la_SOURCES = \
         gen-c_glib/t_test_container_test_types.c \
@@ -219,6 +224,9 @@ nodist_libtestgencpp_la_SOURCES = \
         gen-cpp/ThriftTest_constants.h \
         gen-cpp/ThriftTest_types.h
 libtestgencpp_la_CPPFLAGS = -I../../cpp/src $(BOOST_CPPFLAGS) -I./gen-cpp
+
+thrifttesthandler-dummy-dir:
+	mkdir -p $@
 
 THRIFT = $(top_builddir)/compiler/cpp/thrift
 
