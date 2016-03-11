@@ -1,0 +1,35 @@
+FROM centos:7
+
+RUN yum update -y && yum clean all
+
+RUN yum install -y \
+        autoconf \
+        automake \
+        bison \
+        flex \
+        gcc-c++ \
+        gcc \
+        git \
+        glib2 \
+        glib2-devel \
+        libtool \
+        m4 \
+        make \
+        pkgconfig \
+        python \
+        python-devel \
+        tar \
+        unzip \
+        wget
+
+RUN curl https://bootstrap.pypa.io/get-pip.py | python
+RUN pip install --upgrade Twisted setuptools
+
+RUN git clone -b concrete https://github.com/cjmay/thrift.git /tmp/thrift && \
+    cd /tmp/thrift && \
+    ./bootstrap.sh && \
+    PY_PREFIX=/usr/local ./configure --prefix=/usr/local && \
+    make && \
+    make install && \
+    cd /tmp && \
+    rm -rf /tmp/thrift
