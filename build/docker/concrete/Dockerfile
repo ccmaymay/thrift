@@ -33,3 +33,6 @@ RUN git clone -b concrete https://github.com/cjmay/thrift.git /tmp/thrift && \
     make install && \
     cd /tmp && \
     rm -rf /tmp/thrift
+
+RUN echo '/usr/local/lib' > /etc/ld.so.conf.d/local.conf && \
+    ldconfig -v
