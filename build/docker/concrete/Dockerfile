@@ -25,7 +25,7 @@ RUN yum install -y \
 RUN curl https://bootstrap.pypa.io/get-pip.py | python
 RUN pip install --upgrade Twisted setuptools
 
-RUN git clone -b concrete https://github.com/cjmay/thrift.git /tmp/thrift && \
+RUN git clone https://github.com/cjmay/thrift.git /tmp/thrift && \
     cd /tmp/thrift && \
     ./bootstrap.sh && \
     PY_PREFIX=/usr/local ./configure --prefix=/usr/local && \
@@ -36,3 +36,5 @@ RUN git clone -b concrete https://github.com/cjmay/thrift.git /tmp/thrift && \
 
 RUN echo '/usr/local/lib' > /etc/ld.so.conf.d/local.conf && \
     ldconfig -v
+
+RUN echo '/usr/local/lib64/python2.7/site-packages' > /usr/lib64/python2.7/site-packages/local.pth
