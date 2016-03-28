@@ -25,8 +25,8 @@ RUN yum install -y \
 RUN curl https://bootstrap.pypa.io/get-pip.py | python
 RUN pip install --upgrade Twisted setuptools
 
-RUN git clone https://github.com/cjmay/thrift.git /tmp/thrift && \
-    cd /tmp/thrift && \
+ADD . /tmp/thrift
+RUN cd /tmp/thrift && \
     ./bootstrap.sh && \
     PY_PREFIX=/usr/local ./configure --prefix=/usr/local && \
     make && \
