@@ -6,6 +6,8 @@ RUN yum install -y \
         autoconf \
         automake \
         bison \
+        boost \
+        boost-devel \
         flex \
         gcc-c++ \
         gcc \
