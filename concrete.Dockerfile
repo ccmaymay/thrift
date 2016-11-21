@@ -17,6 +17,8 @@ RUN yum install -y \
         libtool \
         m4 \
         make \
+        openssl \
+        openssl-devel \
         pkgconfig \
         python \
         python-devel \
