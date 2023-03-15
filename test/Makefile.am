@@ -25,6 +25,11 @@ SUBDIRS += c_glib
 PRECROSS_TARGET += precross-c_glib
 endif
 
+if WITH_CL
+SUBDIRS += cl
+PRECROSS_TARGET += precross-cl
+endif
+
 if WITH_CPP
 SUBDIRS += cpp
 PRECROSS_TARGET += precross-cpp
@@ -87,6 +92,11 @@ SUBDIRS += rs
 PRECROSS_TARGET += precross-rs
 endif
 
+if WITH_SWIFT
+SUBDIRS += swift
+PRECROSS_TARGET += precross-swift
+endif
+
 #
 # generate html for ThriftTest.thrift AND validate it!
 #
@@ -113,6 +123,7 @@ dist-hook:
 EXTRA_DIST = \
 	audit \
 	c_glib \
+	cl \
 	cpp \
 	crossrunner \
 	dart \
@@ -127,12 +138,14 @@ EXTRA_DIST = \
 	py.twisted \
 	rb \
 	rs \
+	swift \
 	threads \
 	partial \
 	AnnotationTest.thrift \
 	BrokenConstants.thrift \
 	ConstantsDemo.thrift \
 	DebugProtoTest.thrift \
+	v0.16/DebugProtoTest.thrift \
 	DenseLinkingTest.thrift \
 	DocTest.thrift \
 	DoubleConstantsTest.thrift \
@@ -152,6 +165,7 @@ EXTRA_DIST = \
 	SmallTest.thrift \
 	StressTest.thrift \
 	ThriftTest.thrift \
+	v0.16/ThriftTest.thrift \
 	TypedefTest.thrift \
 	Types.thrift \
 	UnsafeTypes.thrift \
@@ -159,6 +173,7 @@ EXTRA_DIST = \
 	SpecificNameTest.thrift \
 	VoidMethExceptionsTest.thrift \
 	partial/thrift_test_schema.thrift \
+	keys/keygen/.gitignore \
 	known_failures_Linux.json \
 	test.py \
 	tests.json \
